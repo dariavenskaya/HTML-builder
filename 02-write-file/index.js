@@ -14,11 +14,16 @@ rl.prompt();
 rl.on('line', (input) => {
   input = input.toLowerCase();
   console.log(input);
-  rl.close();
+  rl.resume();
   fs.appendFile('02-write-file/text.txt', input, (err) => {
     if (err) {
       console.error(err);
       return;
     }
+    if(input == 'exit'){
+      rl.close();
+      console.log('bye!');
+    }
+  
   });
 });
