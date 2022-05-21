@@ -24,6 +24,5 @@ rl.on('line', (input) => {
       rl.close();
       console.log('bye!');
     }
-  
   });
 });
