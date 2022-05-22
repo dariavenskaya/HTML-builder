@@ -1,3 +1,4 @@
+let process = require('node:process');
 let fs = require('fs');
 function openFile(){
   fs.open('02-write-file/text.txt', 'a+', (err) => {
@@ -11,18 +12,23 @@ let rl = readline.createInterface({
   prompt: '>'
 });
 rl.prompt();
-rl.on('line', (input) => {
-  input = input.toLowerCase();
+rl.on('line', (input)=>{
   console.log(input);
-  rl.resume();
-  fs.appendFile('02-write-file/text.txt', input, (err) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-    if(input == 'exit'){
-      rl.close();
-      console.log('bye!');
-    }
-  });
+  if(input == 'exit'){
+    rl.close();
+    console.log('bye!');
+  }
+  else {
+    rl.resume();
+    fs.appendFile('02-write-file/text.txt', input, (err) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+    });
+  }
+});
+rl.on('SIGINT', ()=>{
+  console.log('bye!');
+  rl.close();
 });
